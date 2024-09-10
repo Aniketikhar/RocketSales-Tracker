@@ -1,19 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-  Typography,
-  Collapse,
-  Button,
-  Dialog,
-  DialogContent,
-} from '@mui/material'
+import { TableContainer, Paper, IconButton, Dialog, DialogContent, Typography } from '@mui/material'
 import { RiEdit2Fill } from 'react-icons/ri'
 import { AiFillDelete } from 'react-icons/ai'
 import girl1 from './Images/girl-1.jpg'
@@ -22,7 +8,17 @@ import girls5 from './Images/girls-5.jpg'
 import mens1 from './Images/mens-1.jpg'
 import mens2 from './Images/mens-2.jpg'
 import mens4 from './Images/mens-4.jpg'
+import {
+  CAvatar,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+} from '@coreui/react'
 
+// Mock data for attendance
 const data = [
   {
     id: 101,
@@ -94,19 +90,8 @@ const getApprovalColor = (approved) => {
 }
 
 const AccordionTable = () => {
-  const [expandedRows, setExpandedRows] = useState([])
   const [open, setOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
-
-  // Handle row click to expand/collapse
-  const handleRowClick = (id) => {
-    const isExpanded = expandedRows.includes(id)
-    if (isExpanded) {
-      setExpandedRows(expandedRows.filter((rowId) => rowId !== id))
-    } else {
-      setExpandedRows([...expandedRows, id])
-    }
-  }
 
   // Function to handle image click
   const handleImageClick = (image) => {
@@ -125,126 +110,130 @@ const AccordionTable = () => {
       <Typography variant="h6" gutterBottom>
         Attendance Table
       </Typography>
-      <TableContainer
-        component={Paper}
-        style={{ backgroundColor: '#212631', borderRadius: '10px' }}
+      <div
+        style={{
+          overflowX: 'auto',
+          backgroundColor: '#212631',
+          borderRadius: '10px',
+        }}
       >
-        <Table>
-          <TableHead style={{ backgroundColor: '#2a303d' }}>
-            <TableRow>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Image
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                ID
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Name
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Mobile No
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                To Till
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Total Days
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Status
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item, index) => (
-              <React.Fragment key={index}>
-                <TableRow>
-                  <TableCell align="center">
-                    <img
+        <TableContainer component={Paper} style={{ width: '100%' }}>
+          <CTable align="middle" className="mb-0 border" hover responsive>
+            <CTableHead className="text-nowrap">
+              <CTableRow>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Image
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  ID
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Name
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Mobile No
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  To Till
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Total Days
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Status
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Actions
+                </CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              {data.map((item, index) => (
+                <CTableRow key={index}>
+                  <CTableDataCell className="text-center">
+                    <CAvatar
+                      size="sx"
                       src={item.image}
-                      alt={item.name}
-                      style={{
-                        width: '60px',
-                        height: '60px',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                      }}
                       onClick={() => handleImageClick(item.image)}
+                      style={{
+                        cursor: 'pointer',
+                        borderRadius: '50%',
+                      }}
                     />
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.id}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.name}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.mobile}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.toTill}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.totalDays}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: getApprovalColor(item.approved) }}>
-                    {item.approved === true
-                      ? 'Approved'
-                      : item.approved === false
-                        ? 'Rejected'
-                        : 'Pending'}
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="contained"
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                    <div>{item.id}</div>
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                    <div>{item.name}</div>
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                    <div>{item.mobile}</div>
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                    <div>{item.toTill}</div>
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                    <div>{item.totalDays}</div>
+                  </CTableDataCell>
+                  <CTableDataCell
+                    className="text-center"
+                    style={{ color: getApprovalColor(item.approved) }}
+                  >
+                    <div
                       style={{
-                        backgroundColor: 'green',
+                        backgroundColor: getApprovalColor(item.approved),
                         color: 'white',
-                        marginRight: '10px',
+                        padding: '4px 10px',
+                        borderRadius: '10px',
+                        display: 'inline-block',
                       }}
                     >
-                      Present
-                    </Button>
-                    <Button
-                      variant="contained"
-                      style={{
-                        backgroundColor: 'red',
-                        color: 'white',
-                      }}
-                    >
-                      Absent
-                    </Button>
+                      {item.approved === true
+                        ? 'Approved'
+                        : item.approved === false
+                          ? 'Rejected'
+                          : 'Pending'}
+                    </div>
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center">
                     <IconButton aria-label="edit">
                       <RiEdit2Fill style={{ fontSize: '25px', color: 'wheat' }} />
                     </IconButton>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell colSpan={8} style={{ paddingBottom: 0, paddingTop: 0 }}>
-                    <Collapse in={expandedRows.includes(item.id)} timeout="auto" unmountOnExit>
-                      <div
-                        style={{
-                          backgroundColor: '#2a303d',
-                          padding: '10px',
-                          borderRadius: '10px',
-                          margin: '10px 0',
-                        }}
-                      >
-                        <Typography variant="body2" style={{ color: 'wheat' }}>
-                          {item.description}
-                        </Typography>
-                      </div>
-                    </Collapse>
-                  </TableCell>
-                </TableRow>
-              </React.Fragment>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                    <IconButton aria-label="delete">
+                      <AiFillDelete style={{ fontSize: '25px', color: 'wheat' }} />
+                    </IconButton>
+                  </CTableDataCell>
+                </CTableRow>
+              ))}
+            </CTableBody>
+          </CTable>
+        </TableContainer>
+      </div>
 
       {/* Modal for zoomed image */}
       <Dialog
