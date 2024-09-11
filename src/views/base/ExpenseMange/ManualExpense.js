@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const UserDetailsForm = () => {
+const ManualExpense = () => {
   const [formData, setFormData] = useState({
     employeeId: '',
     fullName: '',
@@ -183,4 +183,4 @@ const UserDetailsForm = () => {
   )
 }
 
-export default UserDetailsForm
+export default ManualExpense

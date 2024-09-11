@@ -15,7 +15,7 @@ import {
 } from '@coreui/react'
 import { DocsExample } from 'src/components'
 
-const Dropdowns = () => {
+const InventoryManagment = () => {
   return (
     <CCardHeader>
       <strong>Inventory Management</strong>
@@ -23,4 +23,4 @@ const Dropdowns = () => {
   )
 }
 
-export default Dropdowns
+export default InventoryManagment

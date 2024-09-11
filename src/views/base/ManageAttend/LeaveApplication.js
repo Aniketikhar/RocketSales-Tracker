@@ -93,7 +93,7 @@ const getApprovalColor = (approved) => {
   return 'orange'
 }
 
-const AccordionTable = () => {
+const LeaveApplication = () => {
   const [expandedRows, setExpandedRows] = useState([])
   const [open, setOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
@@ -276,4 +276,4 @@ const AccordionTable = () => {
   )
 }
 
-export default AccordionTable
+export default LeaveApplication

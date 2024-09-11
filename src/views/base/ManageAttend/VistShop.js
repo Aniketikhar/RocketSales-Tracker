@@ -37,7 +37,7 @@ const data = [
   { id: 106, name: 'Olive', mobile: '123-456-7449', image: girls5, totalAssignShop: 29 },
 ]
 
-const Accordion = () => {
+const VisitShop = () => {
   const [attendanceData, setAttendanceData] = useState(data)
   const [expandedRows, setExpandedRows] = useState([])
   const [calendarOpen, setCalendarOpen] = useState(false)
@@ -278,4 +278,4 @@ const Accordion = () => {
   )
 }
 
-export default Accordion
+export default VisitShop

@@ -34,7 +34,7 @@ const getStatusColor = (status) => {
   return status === 'Present' ? 'green' : 'red'
 }
 
-const Accordion = () => {
+const Attendance = () => {
   const [open, setOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
 
@@ -164,4 +164,4 @@ const Accordion = () => {
   )
 }
 
-export default Accordion
+export default Attendance

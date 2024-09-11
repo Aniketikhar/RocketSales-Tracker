@@ -1,7 +1,7 @@
 import React from 'react'
 import { CCardHeader } from '@coreui/react'
 
-const ButtonGroups = () => {
+const Po = () => {
   return (
     <CCardHeader>
       <strong>PO</strong>
@@ -9,4 +9,4 @@ const ButtonGroups = () => {
   )
 }
 
-export default ButtonGroups
+export default Po;

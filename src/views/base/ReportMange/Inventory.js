@@ -1,8 +1,8 @@
 import React from 'react'
 import { CCardHeader } from '@coreui/react'
 
-const Alerts = () => {
+const ReportInventory = () => {
   return <strong>Inventory</strong>
 }
 
-export default Alerts
+export default ReportInventory
