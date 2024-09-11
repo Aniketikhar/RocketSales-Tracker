@@ -52,7 +52,7 @@ import avatar6 from 'src/assets/images/avatars/6.jpg'
 
 import WidgetsBrand from '../widgets/WidgetsBrand'
 import WidgetsDropdown from '../widgets/WidgetsDropdown'
-import MainChart from './MainChart';
+import MainMap from '../Map/MapComponent';
 
 const Dashboard = () => {
   const progressExample = [
@@ -184,7 +184,7 @@ const Dashboard = () => {
           <CRow>
             <CCol sm={7} className="d-none d-md-block"></CCol>
           </CRow>
-          <MainChart />
+          <MainMap />
         </CCardBody>
         <CCardFooter>
           <CRow

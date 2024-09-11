@@ -2,6 +2,7 @@ import React from 'react'
 
 const DashBoard = React.lazy(() => import('./views/theme/dashboard/DashBoard'))
 const LiveTrack = React.lazy(() => import('./views/theme/livetrack/LiveTrack'))
+const IndividualTrack = React.lazy(() => import('./views/theme/livetrack/IndividualTrack'))
 const ChatBot = React.lazy(() => import('./views/theme/chatbot/ChatBot'))
 
 const Attendance = React.lazy(() => import('./views/base/ManageAttend/Attendance'))
@@ -34,6 +35,7 @@ const routes = [
   { path: '/dashboard', name: 'DashBoard', element: DashBoard },
   { path: '/chatbot', name: 'ChatBot', element: ChatBot },
   { path: '/livetrack', name: 'LiveTrack', element: LiveTrack },
+  { path: '/salesman', name: 'IndividualTrack', element: IndividualTrack },
 
   { path: '/attendance', name: 'Attendance', element: Attendance },
   { path: '/manual-attendance', name: 'Manual Attendance', element: LeaveApplication },

@@ -1,0 +1,48 @@
+import axios from 'axios';
+import React, { createContext, useEffect, useState } from 'react'
+
+export const GlobalContext = createContext()
+
+export const GlobalProvider = ({ children }) => {
+  const [salesManPosition, setSalesmanPosition] = useState([{
+    lat: 21.1458,
+    lng: 79.0882,
+  }]);
+
+  useEffect(() => {
+    const getSalesmanPosition = async () => {
+      try {
+        const username = 'harshal'
+        const password = '123456'
+        const token = btoa(`${username}:${password}`)
+        const response = await axios.get('https://rocketsalestracker.com/api/positions', {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        })
+
+        if (response.status === 200) {
+          console.log(response.data)
+
+          if (response.data && response.data.length > 0) {
+            const newMarkers = response.data.map((item) => ({
+              lat: item.latitude,
+              lng: item.longitude,
+            }))
+            setSalesmanPosition(newMarkers)
+          }
+        }
+      } catch (error) {
+        console.log('Error:', error)
+      }
+    }
+
+    getSalesmanPosition()
+  }, [])
+
+  return (
+    <GlobalContext.Provider value={{ salesManPosition }}>
+      {children}
+    </GlobalContext.Provider>
+  )
+}
