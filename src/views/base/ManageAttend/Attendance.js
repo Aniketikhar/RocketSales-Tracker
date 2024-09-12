@@ -17,8 +17,6 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilPeople } from '@coreui/icons'
 
 const data = [
   { id: 101, name: 'Vihaan Deshmukh', mobile: '123-456-7890', status: 'Present', image: girl1 },
@@ -79,7 +77,7 @@ const Accordion = () => {
                   ID
                 </CTableHeaderCell>
                 <CTableHeaderCell
-                  className="bg-body-tertiary text-center text-center"
+                  className="bg-body-tertiary text-center"
                   style={{ color: 'wheat' }}
                 >
                   Name
@@ -112,7 +110,7 @@ const Accordion = () => {
                     <CAvatar
                       size="sx"
                       src={item.image}
-                      onClick={() => handleImageClick(item.image)}
+                      onClick={() => handleImageClick(item.image)} // Image click handler added
                       style={{
                         cursor: 'pointer',
                         borderRadius: '50%',
