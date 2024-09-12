@@ -91,7 +91,7 @@ const data = [
   },
 ]
 
-const DataTable = () => {
+const TaskManagment = () => {
   const [open, setOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
 
@@ -261,4 +261,4 @@ const DataTable = () => {
   )
 }
 
-export default DataTable
+export default TaskManagment

@@ -101,7 +101,7 @@ const data = [
   },
 ]
 
-const DataTable = () => {
+const ExpenseDetails = () => {
   const [open, setOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
 
@@ -257,4 +257,4 @@ const DataTable = () => {
   )
 }
 
-export default DataTable
+export default ExpenseDetails

@@ -4,11 +4,12 @@ import { CContainer, CSpinner } from '@coreui/react'
 
 // routes config
 import routes from '../routes'
+import Loader from './Loader/Loader'
 
 const AppContent = () => {
   return (
     <CContainer className="px-4" lg>
-      <Suspense fallback={<CSpinner color="primary" />}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           {routes.map((route, idx) => {
             return (

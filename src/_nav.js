@@ -34,7 +34,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Dashboard',
-    to: '/theme/dashboard',
+    to: '/dashboard',
     icon: (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <BsWindowFullscreen style={{ marginRight: '15px', fontSize: '19px' }} />
@@ -45,7 +45,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Live Tracking',
-    to: '/theme/livetrack',
+    to: '/livetrack',
     icon: (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <IoLocationOutline style={{ marginLeft: '0px', marginRight: '15px', fontSize: '23px' }} />
@@ -55,7 +55,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Chat Bot',
-    to: '/theme/chatbot',
+    to: '/chatbot',
     icon: (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <BsChatDots style={{ marginRight: '15px', fontSize: '20px' }} />
@@ -70,7 +70,7 @@ const _nav = [
   {
     component: CNavGroup,
     name: 'Manage Attendance',
-    to: '/base',
+    // to: '/attendance',
     icon: (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <FiList style={{ marginRight: '15px', fontSize: '20px' }} />
@@ -80,29 +80,29 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Attendance',
-        to: '/base/accordion',
+        to: '/attendance',
       },
       {
         component: CNavItem,
         name: 'Manual Attendance',
-        to: '/base/breadcrumbs',
+        to: '/manual-attendance',
       },
       {
         component: CNavItem,
         name: 'Leave Application',
-        to: '/base/cards',
+        to: '/leave-application',
       },
       {
         component: CNavItem,
         name: 'Visit Shop',
-        to: '/base/carousels',
+        to: '/visit-shop',
       },
     ],
   },
   {
     component: CNavGroup,
     name: 'Manage Order',
-    to: '/buttons',
+    // to: '/invoice',
     icon: (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <FaRegEdit style={{ marginRight: '15px', fontSize: '20px' }} />
@@ -112,17 +112,17 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Invoice',
-        to: '/buttons/buttons',
+        to: '/invoice',
       },
       {
         component: CNavItem,
         name: 'PO',
-        to: '/buttons/button-groups',
+        to: '/po',
       },
       {
         component: CNavItem,
         name: 'Inventory Management',
-        to: '/buttons/dropdowns',
+        to: '/inventory-management',
       },
     ],
   },
@@ -138,12 +138,12 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Task Management',
-        to: '/forms/form-control',
+        to: '/task-management',
       },
       {
         component: CNavItem,
         name: 'User Management',
-        to: '/forms/select',
+        to: '/user-management',
       },
     ],
   },
@@ -160,7 +160,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Expense Details',
-        to: '/icons/coreui-icons',
+        to: '/expense-details',
         badge: {
           color: 'success',
         },
@@ -168,7 +168,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Manual Expense',
-        to: '/icons/flags',
+        to: '/manual-expense',
       },
     ],
   },
@@ -184,12 +184,12 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Inventory',
-        to: '/notifications/alerts',
+        to: '/inventory',
       },
       {
         component: CNavItem,
         name: 'Employee Details',
-        to: '/notifications/badges',
+        to: '/employee-details',
       },
     ],
   },
@@ -197,7 +197,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Settings',
-    to: '/forms/settings',
+    to: '/setting',
     icon: (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <TbSettings style={{ marginRight: '15px', fontSize: '23px' }} />
@@ -208,7 +208,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Help & Support',
-    to: '/forms/help-support',
+    to: '/h&s',
     icon: (
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <LuHelpCircle style={{ marginRight: '15px', fontSize: '23px' }} />
