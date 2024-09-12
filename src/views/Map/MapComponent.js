@@ -29,7 +29,7 @@ const MainMap = () => {
     <>
       <MapContainer
         center={[21.1458, 79.0882]}
-        zoom={13}
+        zoom={8}
         style={{ height: '550px', width: '100%' }}
       >
         <TileLayer

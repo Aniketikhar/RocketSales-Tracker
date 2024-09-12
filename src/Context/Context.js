@@ -1,18 +1,23 @@
-import axios from 'axios';
-import React, { createContext, useEffect, useState } from 'react'
+import axios from 'axios'
+import { createContext, useEffect, useState } from 'react'
 
-export const GlobalContext = createContext()
+export const GlobalContext = createContext(null)
 
-export const GlobalProvider = ({ children }) => {
-  const [salesManPosition, setSalesmanPosition] = useState([{
-    lat: 21.1458,
-    lng: 79.0882,
-  }]);
+export default function GlobalState({ children }) {
+  const [salesManList, setSalesManList] = useState([])
+  const [salesManPosition, setSalesmanPosition] = useState([
+    {
+      lat: 21.1458,
+      lng: 79.0882,
+    },
+  ])
+
+  const [selectedSalesMan, setSelectedSalesMan] = useState()
 
   useEffect(() => {
     const getSalesmanPosition = async () => {
       try {
-        const username = 'harshal'
+        const username = 'school'
         const password = '123456'
         const token = btoa(`${username}:${password}`)
         const response = await axios.get('https://rocketsalestracker.com/api/positions', {
@@ -25,6 +30,8 @@ export const GlobalProvider = ({ children }) => {
           console.log(response.data)
 
           if (response.data && response.data.length > 0) {
+            setSalesManList(response.data);
+
             const newMarkers = response.data.map((item) => ({
               lat: item.latitude,
               lng: item.longitude,
@@ -41,7 +48,7 @@ export const GlobalProvider = ({ children }) => {
   }, [])
 
   return (
-    <GlobalContext.Provider value={{ salesManPosition }}>
+    <GlobalContext.Provider value={{ salesManPosition, salesManList, selectedSalesMan, setSelectedSalesMan }}>
       {children}
     </GlobalContext.Provider>
   )

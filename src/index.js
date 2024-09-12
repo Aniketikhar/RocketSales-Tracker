@@ -5,12 +5,12 @@ import 'core-js'
 
 import App from './App'
 import store from './store'
-import { GlobalProvider } from './Context/Context'
+import GlobalState from './Context/Context'
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <GlobalProvider>
+    <GlobalState>
       <App />
-    </GlobalProvider>
+    </GlobalState>
   </Provider>,
 )

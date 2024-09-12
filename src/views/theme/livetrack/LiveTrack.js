@@ -16,16 +16,23 @@ import CIcon from '@coreui/icons-react'
 import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom'
 import Loader from '../../../components/Loader/Loader'
+import { GlobalContext } from '../../../Context/Context'
 
 const LiveTrack = () => {
   const [salesMan, setSalesman] = useState()
   const [loading, setLoading] = useState(true)
-  const navigate = useNavigate()
+  const { setSelectedSalesMan } = useContext(GlobalContext);
+  const navigate = useNavigate();
+
+  const handleClick = (item) => {
+    setSelectedSalesMan(item);
+    navigate('/salesman');
+  };
 
   useEffect(() => {
     const getSalesman = async () => {
       try {
-        const username = 'harshal'
+        const username = 'school'
         const password = '123456'
         const token = btoa(`${username}:${password}`)
         const response = await axios.get('https://rocketsalestracker.com/api/devices', {
@@ -74,14 +81,14 @@ const LiveTrack = () => {
             </CTableHead>
             <CTableBody>
               {salesMan?.map((item, index) => (
-              <CTableRow v-for="item in tableItems" key={index} to="/dashboard">
+              <CTableRow v-for="item in tableItems" key={index} to="/dashboard" >
                 <CTableDataCell className="text-center">{item.id}</CTableDataCell>
                 <CTableDataCell className="">{item.name}</CTableDataCell>
                 <CTableDataCell className="text-center">{item.phone}</CTableDataCell>
                 <CTableDataCell className="text-center">{item.model}</CTableDataCell>
                 <CTableDataCell className="text-center">{item.category}</CTableDataCell>
                 <CTableDataCell className="text-center">
-                  <button className="btn btn-primary" onClick={() => navigate('/salesman')}>
+                  <button className="btn btn-primary" onClick={() => handleClick(item)}>
                     View Status
                   </button>
                 </CTableDataCell>
