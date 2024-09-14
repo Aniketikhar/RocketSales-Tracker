@@ -5,6 +5,8 @@ export const GlobalContext = createContext(null)
 
 export default function GlobalState({ children }) {
   const [salesManList, setSalesManList] = useState([])
+  const [salesman, setSalesman] = useState([]);
+
   const [salesManPosition, setSalesmanPosition] = useState([
     {
       lat: 21.1458,
@@ -43,12 +45,33 @@ export default function GlobalState({ children }) {
         console.log('Error:', error)
       }
     }
+    const getSalesman = async () => {
+      try {
+        const username = 'harshal'
+        const password = '123456'
+        const token = btoa(`${username}:${password}`)
+        const response = await axios.get('https://rocketsalestracker.com/api/devices', {
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
+        })
+
+        if (response.status === 200) {
+          setSalesman(response.data)
+          console.log(response.data)
+        }
+      } catch (error) {
+        console.log('Error:', error)
+      }
+    }
+
+    getSalesman()
 
     getSalesmanPosition()
   }, [])
 
   return (
-    <GlobalContext.Provider value={{ salesManPosition, salesManList, selectedSalesMan, setSelectedSalesMan }}>
+    <GlobalContext.Provider value={{ salesManPosition,salesman, salesManList, selectedSalesMan, setSelectedSalesMan }}>
       {children}
     </GlobalContext.Provider>
   )

@@ -39,8 +39,7 @@ const MainMap = () => {
         {salesManPosition?.map((salesman , index) => (
           <Marker key={index} position={[salesman.lat, salesman.lng]} icon={customIcon}>
             <Popup>
-              A pretty marker.
-              <br /> Easily customizable.
+              {salesManPosition?.deviceId}
             </Popup>
           </Marker>
         ))}

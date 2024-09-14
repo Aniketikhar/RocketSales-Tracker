@@ -19,48 +19,26 @@ import Loader from '../../../components/Loader/Loader'
 import { GlobalContext } from '../../../Context/Context'
 
 const LiveTrack = () => {
-  const [salesMan, setSalesman] = useState()
   const [loading, setLoading] = useState(true)
-  const { setSelectedSalesMan } = useContext(GlobalContext);
-  const navigate = useNavigate();
+  const { setSelectedSalesMan, salesman } = useContext(GlobalContext)
+  const navigate = useNavigate()
 
   const handleClick = (item) => {
-    setSelectedSalesMan(item);
-    navigate('/salesman');
-  };
+    setSelectedSalesMan(item)
+    navigate('/salesman')
+  }
 
   useEffect(() => {
-    const getSalesman = async () => {
-      try {
-        const username = 'harshal'
-        const password = '123456'
-        const token = btoa(`${username}:${password}`)
-        const response = await axios.get('https://rocketsalestracker.com/api/devices', {
-          headers: {
-            Authorization: `Basic ${token}`,
-          },
-        })
-
-        if (response.status === 200) {
-          setSalesman(response.data)
-          setLoading(false)
-          console.log(response.data)
-        }
-      } catch (error) {
-        console.log('Error:', error)
-      }
+    if (salesman) {
+      setLoading(false)
     }
-
-    getSalesman()
-  }, [])
+  }, [salesman])
 
   return (
     <>
       <CCardHeader className="h3 my-3">Live Tracking</CCardHeader>
       {loading ? (
-        
-          <Loader />
-       
+        <Loader />
       ) : (
         <>
           <MainMap />
@@ -80,19 +58,19 @@ const LiveTrack = () => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {salesMan?.slice(0, 10).map((item, index) => (
-              <CTableRow v-for="item in tableItems" key={index} to="/dashboard" >
-                <CTableDataCell className="text-center">{item.id}</CTableDataCell>
-                <CTableDataCell className="">{item.name}</CTableDataCell>
-                <CTableDataCell className="text-center">{item.phone}</CTableDataCell>
-                <CTableDataCell className="text-center">{item.model}</CTableDataCell>
-                <CTableDataCell className="text-center">{item.category}</CTableDataCell>
-                <CTableDataCell className="text-center">
-                  <button className="btn btn-primary" onClick={() => handleClick(item)}>
-                    View Status
-                  </button>
-                </CTableDataCell>
-              </CTableRow>
+              {salesman?.slice(0, 10).map((item, index) => (
+                <CTableRow v-for="item in tableItems" key={index} to="/dashboard">
+                  <CTableDataCell className="text-center">{item.id}</CTableDataCell>
+                  <CTableDataCell className="">{item.name}</CTableDataCell>
+                  <CTableDataCell className="text-center">{item.phone}</CTableDataCell>
+                  <CTableDataCell className="text-center">{item.model}</CTableDataCell>
+                  <CTableDataCell className="text-center">{item.category}</CTableDataCell>
+                  <CTableDataCell className="text-center">
+                    <button className="btn btn-primary" onClick={() => handleClick(item)}>
+                      View Status
+                    </button>
+                  </CTableDataCell>
+                </CTableRow>
               ))}
             </CTableBody>
           </CTable>
