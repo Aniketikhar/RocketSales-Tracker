@@ -38,8 +38,8 @@ const routes = [
   { path: '/salesman', name: 'IndividualTrack', element: IndividualTrack },
 
   { path: '/attendance', name: 'Attendance', element: Attendance },
-  { path: '/manual-attendance', name: 'Manual Attendance', element: LeaveApplication },
-  { path: '/leave-application', name: 'Leave Application', element: Manual },
+  { path: '/manual-attendance', name: 'Manual Attendance', element: Manual },
+  { path: '/leave-application', name: 'Leave Application', element: LeaveApplication },
   { path: '/visit-shop', name: 'Visit Shop', element: VisitShop },
 
   { path: '/invoice', name: 'Invoice', element: InvoiceForm },
