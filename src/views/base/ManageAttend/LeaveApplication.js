@@ -193,4 +193,4 @@ const AttendanceTable = () => {
   )
 }
 
-export default AccordionTable
+export default AttendanceTable
