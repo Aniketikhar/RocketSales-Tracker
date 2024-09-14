@@ -1,18 +1,14 @@
 import React, { useState } from 'react'
 import {
-  Table,
-  TableBody,
-  TableCell,
   TableContainer,
-  TableHead,
-  TableRow,
   Paper,
   IconButton,
-  Typography,
-  Collapse,
-  Button,
   Dialog,
   DialogContent,
+  DialogActions,
+  DialogTitle,
+  Button,
+  Typography,
 } from '@mui/material'
 import { RiEdit2Fill } from 'react-icons/ri'
 import { AiFillDelete } from 'react-icons/ai'
@@ -22,91 +18,29 @@ import girls5 from './Images/girls-5.jpg'
 import mens1 from './Images/mens-1.jpg'
 import mens2 from './Images/mens-2.jpg'
 import mens4 from './Images/mens-4.jpg'
+import {
+  CAvatar,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+} from '@coreui/react'
 
 const data = [
-  {
-    id: 101,
-    name: 'John',
-    mobile: '9045116165',
-    toTill: '2024-09-01 to 2024-09-15',
-    totalDays: 15,
-    description: 'Vacation',
-    approved: true,
-    image: girl1,
-  },
-  {
-    id: 102,
-    name: 'Dom',
-    mobile: '90451161554',
-    toTill: '2024-08-05 to 2024-08-25',
-    totalDays: 20,
-    description: 'Medical Leave',
-    approved: false,
-    image: mens1,
-  },
-  {
-    id: 103,
-    name: 'Paul',
-    mobile: '9045886165',
-    toTill: '2024-07-01 to 2024-07-10',
-    totalDays: 10,
-    description: 'Conference',
-    approved: null,
-    image: girls3,
-  },
-  {
-    id: 104,
-    name: 'Whick',
-    mobile: '9045116165',
-    toTill: '2024-06-10 to 2024-06-20',
-    totalDays: 10,
-    description: 'Personal',
-    approved: true,
-    image: mens2,
-  },
-  {
-    id: 105,
-    name: 'Kavin',
-    mobile: '909996165',
-    toTill: '2024-05-15 to 2024-05-30',
-    totalDays: 15,
-    description: 'Family Event',
-    approved: false,
-    image: mens4,
-  },
-  {
-    id: 106,
-    name: 'Olive',
-    mobile: '9088116165',
-    toTill: '2024-09-10 to 2024-09-20',
-    totalDays: 10,
-    description: 'Business Trip',
-    approved: null,
-    image: girls5,
-  },
+  { id: 101, name: 'Vihaan Deshmukh', mobile: '123-456-7890', image: girl1 },
+  { id: 102, name: 'Dom', mobile: '123-456-7449', image: mens1 },
+  { id: 103, name: 'Paul', mobile: '123-456-7449', image: girls3 },
+  { id: 104, name: 'Whick', mobile: '123-456-7449', image: mens2 },
+  { id: 105, name: 'Kavin', mobile: '123-456-7449', image: mens4 },
+  { id: 106, name: 'Olive', mobile: '123-456-7449', image: girls5 },
 ]
 
-// Function to get approval status color
-const getApprovalColor = (approved) => {
-  if (approved === true) return 'green'
-  if (approved === false) return 'red'
-  return 'orange'
-}
-
-const LeaveApplication = () => {
-  const [expandedRows, setExpandedRows] = useState([])
+const AttendanceTable = () => {
   const [open, setOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
-
-  // Handle row click to expand/collapse
-  const handleRowClick = (id) => {
-    const isExpanded = expandedRows.includes(id)
-    if (isExpanded) {
-      setExpandedRows(expandedRows.filter((rowId) => rowId !== id))
-    } else {
-      setExpandedRows([...expandedRows, id])
-    }
-  }
+  const [confirmationDialog, setConfirmationDialog] = useState({ open: false, action: null })
 
   // Function to handle image click
   const handleImageClick = (image) => {
@@ -114,10 +48,27 @@ const LeaveApplication = () => {
     setOpen(true)
   }
 
-  // Function to close the modal
+  // Function to close the image modal
   const handleClose = () => {
     setOpen(false)
     setSelectedImage(null)
+  }
+
+  // Function to open the confirmation dialog for approve/reject
+  const handleActionClick = (action) => {
+    setConfirmationDialog({ open: true, action })
+  }
+
+  // Function to close the confirmation dialog
+  const handleConfirmClose = () => {
+    setConfirmationDialog({ open: false, action: null })
+  }
+
+  // Function to confirm approve/reject action
+  const handleConfirmAction = () => {
+    // Add logic for approve or reject here (e.g., updating the backend)
+    console.log(`Confirmed ${confirmationDialog.action}`)
+    setConfirmationDialog({ open: false, action: null })
   }
 
   return (
@@ -125,155 +76,121 @@ const LeaveApplication = () => {
       <Typography variant="h6" gutterBottom>
         Attendance Table
       </Typography>
-      <TableContainer
-        component={Paper}
-        style={{ backgroundColor: '#212631', borderRadius: '10px' }}
-      >
-        <Table>
-          <TableHead style={{ backgroundColor: '#2a303d' }}>
-            <TableRow>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Image
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                ID
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Name
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Mobile No
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                To Till
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Total Days
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Status
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item, index) => (
-              <React.Fragment key={index}>
-                <TableRow>
-                  <TableCell align="center">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      style={{
-                        width: '60px',
-                        height: '60px',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => handleImageClick(item.image)}
-                    />
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.id}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.name}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.mobile}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.toTill}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.totalDays}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: getApprovalColor(item.approved) }}>
-                    {item.approved === true
-                      ? 'Approved'
-                      : item.approved === false
-                        ? 'Rejected'
-                        : 'Pending'}
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      style={{
-                        backgroundColor: 'green',
-                        color: 'white',
-                        marginRight: '10px',
-                      }}
-                    >
-                      Present
-                    </Button>
-                    <Button
-                      variant="contained"
-                      style={{
-                        backgroundColor: 'red',
-                        color: 'white',
-                      }}
-                    >
-                      Absent
-                    </Button>
-                    <IconButton aria-label="edit">
-                      <RiEdit2Fill style={{ fontSize: '25px', color: 'wheat' }} />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell colSpan={8} style={{ paddingBottom: 0, paddingTop: 0 }}>
-                    <Collapse in={expandedRows.includes(item.id)} timeout="auto" unmountOnExit>
-                      <div
-                        style={{
-                          backgroundColor: '#2a303d',
-                          padding: '10px',
-                          borderRadius: '10px',
-                          margin: '10px 0',
-                        }}
-                      >
-                        <Typography variant="body2" style={{ color: 'wheat' }}>
-                          {item.description}
-                        </Typography>
-                      </div>
-                    </Collapse>
-                  </TableCell>
-                </TableRow>
-              </React.Fragment>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      {/* Modal for zoomed image */}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            overflow: 'hidden',
-            borderRadius: '50%',
-            maxWidth: 'none',
-          },
+      <div
+        style={{
+          overflowX: 'auto',
+          backgroundColor: '#212631',
+          borderRadius: '10px',
         }}
       >
-        <DialogContent style={{ padding: 0 }}>
+        <TableContainer component={Paper} style={{ width: '100%' }}>
+          <CTable align="middle" className="mb-0 border" hover responsive>
+            <CTableHead className="text-nowrap">
+              <CTableRow>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Image
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Name
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Mobile
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Status
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Actions
+                </CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              {data.map((row) => (
+                <CTableRow key={row.id}>
+                  <CTableDataCell className="text-center">
+                    <CAvatar
+                      src={row.image}
+                      size="lg"
+                      shape="rounded-circle"
+                      onClick={() => handleImageClick(row.image)}
+                      style={{ cursor: 'pointer', borderRadius: '50%' }}
+                    />
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center">{row.name}</CTableDataCell>
+                  <CTableDataCell className="text-center">{row.mobile}</CTableDataCell>
+                  <CTableDataCell className="text-center">
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: 'green', color: 'white', marginRight: '8px' }}
+                      onClick={() => handleActionClick('approve')}
+                    >
+                      Approved
+                    </Button>
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: 'red', color: 'white' }}
+                      onClick={() => handleActionClick('reject')}
+                    >
+                      Rejected
+                    </Button>
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center">
+                    <IconButton color="primary">
+                      <RiEdit2Fill />
+                    </IconButton>
+                    <IconButton color="error">
+                      <AiFillDelete />
+                    </IconButton>
+                  </CTableDataCell>
+                </CTableRow>
+              ))}
+            </CTableBody>
+          </CTable>
+        </TableContainer>
+      </div>
+
+      {/* Image Zoom Modal */}
+      <Dialog open={open} onClose={handleClose} maxWidth="md">
+        <DialogContent>
           {selectedImage && (
-            <img
-              src={selectedImage}
-              alt="Zoomed"
-              style={{
-                width: '500px',
-                height: '500px',
-                borderRadius: '50%',
-              }}
-            />
+            <img src={selectedImage} alt="Zoomed" style={{ width: '100%', height: 'auto' }} />
           )}
         </DialogContent>
+      </Dialog>
+
+      {/* Confirmation Dialog for Approve/Reject */}
+      <Dialog open={confirmationDialog.open} onClose={handleConfirmClose}>
+        <DialogTitle>
+          {`Are You Sure You Want To ${
+            confirmationDialog.action === 'approve' ? 'Approve' : 'Reject'
+          }?`}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleConfirmClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmAction} color="primary" autoFocus>
+            Confirm
+          </Button>
+        </DialogActions>
       </Dialog>
     </div>
   )
 }
 
-export default LeaveApplication
+export default AttendanceTable

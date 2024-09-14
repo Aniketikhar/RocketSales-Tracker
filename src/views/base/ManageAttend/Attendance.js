@@ -1,17 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-  Dialog,
-  DialogContent,
-  Typography,
-} from '@mui/material'
+import { TableContainer, Paper, IconButton, Dialog, DialogContent, Typography } from '@mui/material'
 import { RiEdit2Fill } from 'react-icons/ri'
 import { AiFillDelete } from 'react-icons/ai'
 import girl1 from './Images/girl-1.jpg'
@@ -20,9 +8,18 @@ import girls5 from './Images/girls-5.jpg'
 import mens1 from './Images/mens-1.jpg'
 import mens2 from './Images/mens-2.jpg'
 import mens4 from './Images/mens-4.jpg'
+import {
+  CAvatar,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+} from '@coreui/react'
 
 const data = [
-  { id: 101, name: 'John', mobile: '123-456-7890', status: 'Present', image: girl1 },
+  { id: 101, name: 'Vihaan Deshmukh', mobile: '123-456-7890', status: 'Present', image: girl1 },
   { id: 102, name: 'Dom', mobile: '123-456-7449', status: 'Present', image: mens1 },
   { id: 103, name: 'Paul', mobile: '123-456-7449', status: 'Absent', image: girls3 },
   { id: 104, name: 'Whick', mobile: '123-456-7449', status: 'Present', image: mens2 },
@@ -30,6 +27,7 @@ const data = [
   { id: 106, name: 'Olive', mobile: '123-456-7449', status: 'Present', image: girls5 },
 ]
 
+// Get status color based on the presence status
 const getStatusColor = (status) => {
   return status === 'Present' ? 'green' : 'red'
 }
@@ -55,84 +53,116 @@ const Attendance = () => {
       <Typography variant="h6" gutterBottom>
         Attendance Table
       </Typography>
-      <TableContainer
-        component={Paper}
-        style={{ backgroundColor: '#212631', borderRadius: '10px' }}
+      <div
+        style={{
+          overflowX: 'auto',
+          backgroundColor: '#212631',
+          borderRadius: '10px',
+        }}
       >
-        <Table>
-          <TableHead style={{ backgroundColor: '#2a303d' }}>
-            <TableRow>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Image
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                ID
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Name
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Mobile No
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Status
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell align="center">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    style={{
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '50%',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => handleImageClick(item.image)}
-                  />
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.id}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.name}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.mobile}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  <Typography
-                    style={{
-                      backgroundColor: getStatusColor(item.status),
-                      color: 'white',
-                      padding: '4px 10px',
-                      borderRadius: '10px',
-                      display: 'inline-block',
-                    }}
-                  >
-                    {item.status}
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton aria-label="edit">
-                    <RiEdit2Fill style={{ fontSize: '25px', color: 'wheat' }} />
-                  </IconButton>
-                  <IconButton aria-label="delete">
-                    <AiFillDelete style={{ fontSize: '25px', color: 'wheat' }} />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+        <TableContainer component={Paper} style={{ width: '100%' }}>
+          <CTable align="middle" className="mb-0 border" hover responsive>
+            <CTableHead className="text-nowrap">
+              <CTableRow>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Image
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  ID
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Name
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Mobile No
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Status
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="bg-body-tertiary text-center"
+                  style={{ color: 'wheat' }}
+                >
+                  Actions
+                </CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              {data.map((item, index) => (
+                <CTableRow key={index}>
+                  {/* Profile image */}
+                  <CTableDataCell className="text-center">
+                    <CAvatar
+                      size="sx"
+                      src={item.image}
+                      onClick={() => handleImageClick(item.image)} // Image click handler added
+                      style={{
+                        cursor: 'pointer',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  </CTableDataCell>
+
+                  {/* ID */}
+                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                    <div>{item.id}</div>
+                  </CTableDataCell>
+
+                  {/* Name */}
+                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                    <div>{item.name}</div>
+                  </CTableDataCell>
+
+                  {/* Mobile Number */}
+                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                    <div>{item.mobile}</div>
+                  </CTableDataCell>
+
+                  {/* Status with color coding */}
+                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                    <div
+                      style={{
+                        backgroundColor: getStatusColor(item.status),
+                        color: 'white',
+                        padding: '4px 10px',
+                        borderRadius: '10px',
+                        display: 'inline-block',
+                      }}
+                    >
+                      {item.status}
+                    </div>
+                  </CTableDataCell>
+
+                  {/* Action icons (edit and delete) */}
+                  <CTableDataCell className="text-center">
+                    <IconButton aria-label="edit">
+                      <RiEdit2Fill style={{ fontSize: '25px', color: 'wheat' }} />
+                    </IconButton>
+                    <IconButton aria-label="delete">
+                      <AiFillDelete style={{ fontSize: '25px', color: 'wheat' }} />
+                    </IconButton>
+                  </CTableDataCell>
+                </CTableRow>
+              ))}
+            </CTableBody>
+          </CTable>
+        </TableContainer>
+      </div>
 
       {/* Modal for zoomed image */}
       <Dialog
