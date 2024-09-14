@@ -17,7 +17,7 @@ export default function GlobalState({ children }) {
   useEffect(() => {
     const getSalesmanPosition = async () => {
       try {
-        const username = 'school'
+        const username = 'harshal'
         const password = '123456'
         const token = btoa(`${username}:${password}`)
         const response = await axios.get('https://rocketsalestracker.com/api/positions', {

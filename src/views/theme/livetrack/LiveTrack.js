@@ -32,7 +32,7 @@ const LiveTrack = () => {
   useEffect(() => {
     const getSalesman = async () => {
       try {
-        const username = 'school'
+        const username = 'harshal'
         const password = '123456'
         const token = btoa(`${username}:${password}`)
         const response = await axios.get('https://rocketsalestracker.com/api/devices', {
@@ -80,7 +80,7 @@ const LiveTrack = () => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {salesMan?.map((item, index) => (
+              {salesMan?.slice(0, 10).map((item, index) => (
               <CTableRow v-for="item in tableItems" key={index} to="/dashboard" >
                 <CTableDataCell className="text-center">{item.id}</CTableDataCell>
                 <CTableDataCell className="">{item.name}</CTableDataCell>

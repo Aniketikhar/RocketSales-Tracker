@@ -4,6 +4,8 @@ import location from 'src/assets/location.png'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { GlobalContext } from '../../../Context/Context'
+import { CCard, CCardBody, CCardHeader } from '@coreui/react'
+import axios from 'axios'
 
 // Fix Leaflet's default marker icon in Webpack
 const customIcon = L.icon({
@@ -31,6 +33,7 @@ const MapController = ({ individualSalesMan }) => {
 const IndividualTrack = () => {
   const [individualSalesMan, setIndividualSalesMan] = useState(null)
   const { salesManList, selectedSalesMan } = useContext(GlobalContext)
+  const [address, setAddress] = useState()
 
   useEffect(() => {
     if (salesManList && selectedSalesMan?.positionId) {
@@ -43,7 +46,7 @@ const IndividualTrack = () => {
 
       if (foundSalesman) {
         setIndividualSalesMan(foundSalesman)
-        console.log("founded salesman" , foundSalesman)
+        console.log('founded salesman', foundSalesman)
 
         // Ensure mapRef is set before calling flyTo
         // if (map) {
@@ -57,29 +60,124 @@ const IndividualTrack = () => {
     }
   }, [selectedSalesMan, salesManList])
 
+  // pk.23e7282ce5839ef4196426bbd0fd0def
+
+  useEffect(() => {
+    const fetchAddress = async () => {
+      try {
+        const response = await axios.get(
+          `https://us1.locationiq.com/v1/reverse.php?key=pk.23e7282ce5839ef4196426bbd0fd0def&lat=${individualSalesMan?.latitude}&lon=${individualSalesMan?.longitude}&format=json`,
+        )
+        if (response.data) {
+          setAddress(response.data)
+        } else {
+          setAddress('Address not found')
+        }
+      } catch (error) {
+        console.error('Error fetching the address:', error)
+        setAddress('Error fetching address')
+      }
+    }
+
+    if (individualSalesMan?.latitude && individualSalesMan?.longitude) {
+      fetchAddress()
+    }
+  }, [individualSalesMan])
+
+  // "address": {
+  //       "road": "NH160H",
+  //       "village": "Nimgul",
+  //       "county": "\u0938\u093f\u0902\u0926\u0916\u0947\u0921",
+  //       "state_district": "Dhule District",
+  //       "state": "stateMaharashtra",
+  //       "postcode": "425408",
+  //       "country": "India",
+  //       "country_code": "in"
+  //   },
+
   return (
-    <MapContainer
-      center={[21.1458, 79.0882]} // Default center
-      zoom={13} // Default zoom
-      style={{ height: '500px', width: '70%' }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; RocketSales, HB Gadget Solutions Nagpur"
-      />
-      {individualSalesMan && (
-        <Marker
-          position={[individualSalesMan.latitude, individualSalesMan.longitude]}
-          icon={customIcon}
-        >
-          <Popup>
-            A pretty marker.
-            <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      )}
-      <MapController individualSalesMan={individualSalesMan} />
-    </MapContainer>
+    <>
+      <div className="row">
+        <div className="col-8">
+          <div className="details" style={{ height: '150px' }}>
+            <CCard className="mb-4">
+              <div className="row">
+                <div className="col flex">
+                  <div>👷‍♂️</div>
+                  <div>{selectedSalesMan ? selectedSalesMan?.name : 'User Name'}</div>
+                </div>
+                <div className="col flex">
+                  <div>🛣</div>
+                  <div className="col">
+                    {address
+                      ? `${address.address.road}, ${address.address.village}, ${address.address.state_district},${address.address.state}, ${address.address.country}, ${address.address.postcode}`
+                      : 'Address of User'}
+                  </div>
+                </div>
+              </div>
+              <div className="row g-2">
+                <div className="col">
+                  <CCard className="mb-4">Ignition</CCard>
+                </div>
+                <div className="col">
+                  <CCard className="mb-4">speed</CCard>
+                </div>
+                <div className="col">
+                  <CCard className="mb-4">time</CCard>
+                </div>
+                <div className="col">
+                  <CCard className="mb-4">lorem epsom</CCard>
+                </div>
+                <div className="col">
+                  <CCard className="mb-4">lokjfndf kndfdf</CCard>
+                </div>
+                <div className="col">
+                  <CCard className="mb-4">fbg dfgdfgdf gfdg</CCard>
+                </div>
+              </div>
+            </CCard>
+          </div>
+          <div className="individualMap">
+            <MapContainer
+              center={[21.1458, 79.0882]} // Default center
+              zoom={13} // Default zoom
+              style={{ height: '500px', width: '100%' }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="&copy; RocketSales, HB Gadget Solutions Nagpur"
+              />
+              {individualSalesMan && (
+                <Marker
+                  position={[individualSalesMan.latitude, individualSalesMan.longitude]}
+                  icon={customIcon}
+                >
+                  <Popup>
+                    A pretty marker.
+                    <br /> Easily customizable.
+                  </Popup>
+                </Marker>
+              )}
+              <MapController individualSalesMan={individualSalesMan} />
+            </MapContainer>
+          </div>
+        </div>
+        <div className="col-4">
+          <CCard className="mb-4">
+            <CCardHeader>Tasks</CCardHeader>
+            <CCardBody>
+              <ul>
+                <li>Task 1</li>
+                <li>Task 2</li>
+                <li>Task 3</li>
+                <li>Task 4</li>
+                <li>Task 5</li>
+              </ul>
+            </CCardBody>
+          </CCard>
+        </div>
+      </div>
+    </>
   )
 }
 
