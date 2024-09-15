@@ -16,6 +16,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CImage,
 } from '@coreui/react'
 
 const data = [
@@ -64,40 +65,14 @@ const Attendance = () => {
           <CTable align="middle" className="mb-0 border" hover responsive>
             <CTableHead className="text-nowrap">
               <CTableRow>
-                <CTableHeaderCell
-                  className="bg-body-tertiary text-center"
-                  style={{ color: 'wheat' }}
-                >
-                  Image
-                </CTableHeaderCell>
-                <CTableHeaderCell
-                  className="bg-body-tertiary text-center"
-                  style={{ color: 'wheat' }}
-                >
-                  ID
-                </CTableHeaderCell>
-                <CTableHeaderCell
-                  className="bg-body-tertiary text-center"
-                  style={{ color: 'wheat' }}
-                >
-                  Name
-                </CTableHeaderCell>
-                <CTableHeaderCell
-                  className="bg-body-tertiary text-center"
-                  style={{ color: 'wheat' }}
-                >
+                <CTableHeaderCell className="bg-body-tertiary text-center">Image</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">ID</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">Name</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">
                   Mobile No
                 </CTableHeaderCell>
-                <CTableHeaderCell
-                  className="bg-body-tertiary text-center"
-                  style={{ color: 'wheat' }}
-                >
-                  Status
-                </CTableHeaderCell>
-                <CTableHeaderCell
-                  className="bg-body-tertiary text-center"
-                  style={{ color: 'wheat' }}
-                >
+                <CTableHeaderCell className="bg-body-tertiary text-center">Status</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">
                   Actions
                 </CTableHeaderCell>
               </CTableRow>
@@ -105,36 +80,34 @@ const Attendance = () => {
             <CTableBody>
               {data.map((item, index) => (
                 <CTableRow key={index}>
-                  {/* Profile image */}
+                  {/* Profile image with the CImage thumbnail component */}
                   <CTableDataCell className="text-center">
-                    <CAvatar
-                      size="sx"
+                    <CImage
+                      rounded
+                      thumbnail
                       src={item.image}
                       onClick={() => handleImageClick(item.image)} // Image click handler added
-                      style={{
-                        cursor: 'pointer',
-                        borderRadius: '50%',
-                      }}
+                      style={{ width: '60px', height: '60px', cursor: 'pointer' }} // Same size as in the first code
                     />
                   </CTableDataCell>
 
                   {/* ID */}
-                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                  <CTableDataCell className="text-center">
                     <div>{item.id}</div>
                   </CTableDataCell>
 
                   {/* Name */}
-                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                  <CTableDataCell className="text-center">
                     <div>{item.name}</div>
                   </CTableDataCell>
 
                   {/* Mobile Number */}
-                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                  <CTableDataCell className="text-center">
                     <div>{item.mobile}</div>
                   </CTableDataCell>
 
                   {/* Status with color coding */}
-                  <CTableDataCell className="text-center" style={{ color: 'wheat' }}>
+                  <CTableDataCell className="text-center">
                     <div
                       style={{
                         backgroundColor: getStatusColor(item.status),
@@ -151,10 +124,10 @@ const Attendance = () => {
                   {/* Action icons (edit and delete) */}
                   <CTableDataCell className="text-center">
                     <IconButton aria-label="edit">
-                      <RiEdit2Fill style={{ fontSize: '25px', color: 'wheat' }} />
+                      <RiEdit2Fill style={{ fontSize: '25px', color: 'blue' }} />
                     </IconButton>
                     <IconButton aria-label="delete">
-                      <AiFillDelete style={{ fontSize: '25px', color: 'wheat' }} />
+                      <AiFillDelete style={{ fontSize: '25px', color: 'red' }} />
                     </IconButton>
                   </CTableDataCell>
                 </CTableRow>
@@ -171,22 +144,13 @@ const Attendance = () => {
         PaperProps={{
           style: {
             overflow: 'hidden',
-            borderRadius: '50%',
             maxWidth: 'none',
           },
         }}
       >
         <DialogContent style={{ padding: 0 }}>
           {selectedImage && (
-            <img
-              src={selectedImage}
-              alt="Zoomed"
-              style={{
-                width: '500px',
-                height: '500px',
-                borderRadius: '50%',
-              }}
-            />
+            <img src={selectedImage} alt="Zoomed" style={{ borderRadius: '50%', height: 'auto' }} />
           )}
         </DialogContent>
       </Dialog>

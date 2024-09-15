@@ -1,21 +1,25 @@
 import React, { useState } from 'react'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
+  CAvatar,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+  CImage,
+  CModal,
+  CModalBody,
+} from '@coreui/react'
+import {
+  Button,
   IconButton,
   Typography,
   Collapse,
-  Button,
-  Dialog,
-  DialogContent,
   Select,
   MenuItem,
-  TextField,
+  DialogActions,
+  DialogTitle,
 } from '@mui/material'
 import { RiEdit2Fill } from 'react-icons/ri'
 import { AiFillDelete } from 'react-icons/ai'
@@ -94,86 +98,57 @@ const VisitShop = () => {
     }
   }
 
-  const handleTotalAssignShopChange = (id, value) => {
-    const updatedData = attendanceData.map((item) => {
-      if (item.id === id) {
-        return { ...item, totalAssignShop: value }
-      }
-      return item
-    })
-    setAttendanceData(updatedData)
-  }
-
   return (
     <div>
       <Typography variant="h6" gutterBottom>
         Visit Shop
       </Typography>
-      <TableContainer
-        component={Paper}
-        style={{ backgroundColor: '#212631', borderRadius: '10px' }}
+      <div
+        style={{
+          overflowX: 'auto',
+          backgroundColor: '#212631',
+          borderRadius: '10px',
+        }}
       >
-        <Table>
-          <TableHead style={{ backgroundColor: '#2a303d' }}>
-            <TableRow>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Image
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                ID
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Name
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Mobile No
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Total Shop Visit
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Option
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Progress
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+        <CTable align="middle" className="mb-0 border" hover responsive>
+          <CTableHead className="text-nowrap">
+            <CTableRow>
+              <CTableHeaderCell className="text-center">Image</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">ID</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Name</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Mobile No</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Total Shop Visit</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Option</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Progress</CTableHeaderCell>
+              <CTableHeaderCell className="text-center">Actions</CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          <CTableBody>
             {attendanceData.map((item) => (
               <React.Fragment key={item.id}>
-                <TableRow onClick={() => handleRowClick(item.id)}>
-                  <TableCell align="center">
-                    <img
+                <CTableRow onClick={() => handleRowClick(item.id)}>
+                  <CTableDataCell className="text-center">
+                    <CImage
                       src={item.image}
-                      alt={item.name}
+                      rounded
+                      thumbnail
+                      onClick={() => handleImageClick(item.image)}
                       style={{
+                        cursor: 'pointer',
+                        borderRadius: '50%',
                         width: '60px',
                         height: '60px',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
+                        objectFit: 'cover',
                       }}
-                      onClick={() => handleImageClick(item.image)}
                     />
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.id}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.name}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.mobile}
-                  </TableCell>
-                  <TableCell align="center" style={{ color: 'wheat' }}>
-                    {item.totalAssignShop}
-                  </TableCell>
-                  <TableCell align="center">
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center">{item.id}</CTableDataCell>
+                  <CTableDataCell className="text-center">{item.name}</CTableDataCell>
+                  <CTableDataCell className="text-center">{item.mobile}</CTableDataCell>
+                  <CTableDataCell className="text-center">{item.totalAssignShop}</CTableDataCell>
+                  <CTableDataCell className="text-center">
                     <Select
-                      style={{ color: 'wheat', width: '150px' }}
+                      style={{ width: '150px' }}
                       value={item.selectedOption || 'Today'}
                       onChange={(e) => handleDropdownChange(item.id, e.target.value)}
                       fullWidth
@@ -186,8 +161,8 @@ const VisitShop = () => {
                         Choose from Calendar <IoCalendarClearOutline />
                       </MenuItem>
                     </Select>
-                  </TableCell>
-                  <TableCell align="center">
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center">
                     <Button
                       variant="contained"
                       style={{
@@ -198,22 +173,22 @@ const VisitShop = () => {
                     >
                       View Progress
                     </Button>
-                  </TableCell>
-                  <TableCell align="center">
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center">
                     <div
                       style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     >
                       <IconButton aria-label="edit" style={{ marginRight: '10px' }}>
-                        <RiEdit2Fill style={{ fontSize: '25px', color: 'wheat' }} />
+                        <RiEdit2Fill style={{ fontSize: '25px', color: 'blue' }} />
                       </IconButton>
                       <IconButton aria-label="delete">
-                        <AiFillDelete style={{ fontSize: '25px', color: 'wheat' }} />
+                        <AiFillDelete style={{ fontSize: '25px', color: 'red' }} />
                       </IconButton>
                     </div>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell colSpan={8} style={{ paddingBottom: 0, paddingTop: 0 }}>
+                  </CTableDataCell>
+                </CTableRow>
+                <CTableRow>
+                  <CTableDataCell colSpan={8} style={{ paddingBottom: 0, paddingTop: 0 }}>
                     <Collapse in={expandedRows.includes(item.id)} timeout="auto" unmountOnExit>
                       <div
                         style={{
@@ -228,52 +203,22 @@ const VisitShop = () => {
                         </Typography>
                       </div>
                     </Collapse>
-                  </TableCell>
-                </TableRow>
+                  </CTableDataCell>
+                </CTableRow>
               </React.Fragment>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+          </CTableBody>
+        </CTable>
+      </div>
 
-      {/* Modal for zoomed image */}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            overflow: 'hidden',
-            borderRadius: '50%',
-            maxWidth: 'none',
-          },
-        }}
-      >
-        <DialogContent style={{ padding: 0 }}>
+      {/* Image Modal */}
+      <CModal alignment="center" visible={open} onClose={handleClose}>
+        <CModalBody>
           {selectedImage && (
-            <img
-              src={selectedImage}
-              alt="Zoomed"
-              style={{
-                width: '500px',
-                height: '500px',
-                borderRadius: '50%',
-              }}
-            />
+            <CImage src={selectedImage} style={{ width: '100%', height: 'auto' }} />
           )}
-        </DialogContent>
-      </Dialog>
-
-      {/* Calendar Modal */}
-      <Dialog open={calendarOpen} onClose={handleCalendarClose}>
-        <DialogContent>
-          <DatePicker
-            label="Choose Date"
-            value={selectedDate}
-            onChange={handleDateChange}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </DialogContent>
-      </Dialog>
+        </CModalBody>
+      </CModal>
     </div>
   )
 }

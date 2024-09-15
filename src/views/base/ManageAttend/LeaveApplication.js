@@ -19,13 +19,15 @@ import mens1 from './Images/mens-1.jpg'
 import mens2 from './Images/mens-2.jpg'
 import mens4 from './Images/mens-4.jpg'
 import {
-  CAvatar,
   CTable,
   CTableBody,
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CImage,
+  CModal,
+  CModalBody,
 } from '@coreui/react'
 
 const data = [
@@ -74,7 +76,7 @@ const AttendanceTable = () => {
   return (
     <div>
       <Typography variant="h6" gutterBottom>
-        Attendance Table
+        Leave Application
       </Typography>
       <div
         style={{
@@ -85,36 +87,13 @@ const AttendanceTable = () => {
       >
         <TableContainer component={Paper} style={{ width: '100%' }}>
           <CTable align="middle" className="mb-0 border" hover responsive>
-            <CTableHead className="text-nowrap">
+            <CTableHead className="text-center">
               <CTableRow>
-                <CTableHeaderCell
-                  className="bg-body-tertiary text-center"
-                  style={{ color: 'wheat' }}
-                >
-                  Image
-                </CTableHeaderCell>
-                <CTableHeaderCell
-                  className="bg-body-tertiary text-center"
-                  style={{ color: 'wheat' }}
-                >
-                  Name
-                </CTableHeaderCell>
-                <CTableHeaderCell
-                  className="bg-body-tertiary text-center"
-                  style={{ color: 'wheat' }}
-                >
-                  Mobile
-                </CTableHeaderCell>
-                <CTableHeaderCell
-                  className="bg-body-tertiary text-center"
-                  style={{ color: 'wheat' }}
-                >
-                  Status
-                </CTableHeaderCell>
-                <CTableHeaderCell
-                  className="bg-body-tertiary text-center"
-                  style={{ color: 'wheat' }}
-                >
+                <CTableHeaderCell className="bg-body-tertiary text-center">Image</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">Name</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">Mobile</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">Status</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">
                   Actions
                 </CTableHeaderCell>
               </CTableRow>
@@ -123,12 +102,18 @@ const AttendanceTable = () => {
               {data.map((row) => (
                 <CTableRow key={row.id}>
                   <CTableDataCell className="text-center">
-                    <CAvatar
+                    <CImage
                       src={row.image}
-                      size="lg"
-                      shape="rounded-circle"
+                      rounded
+                      thumbnail
                       onClick={() => handleImageClick(row.image)}
-                      style={{ cursor: 'pointer', borderRadius: '50%' }}
+                      style={{
+                        cursor: 'pointer',
+                        borderRadius: '50%',
+                        width: '60px', // Adjust the size if necessary
+                        height: '60px',
+                        objectFit: 'cover', // Ensures the image covers the circle area
+                      }}
                     />
                   </CTableDataCell>
                   <CTableDataCell className="text-center">{row.name}</CTableDataCell>
@@ -165,13 +150,13 @@ const AttendanceTable = () => {
       </div>
 
       {/* Image Zoom Modal */}
-      <Dialog open={open} onClose={handleClose} maxWidth="md">
-        <DialogContent>
+      <CModal alignment="center" visible={open} onClose={handleClose}>
+        <CModalBody>
           {selectedImage && (
-            <img src={selectedImage} alt="Zoomed" style={{ width: '100%', height: 'auto' }} />
+            <CImage src={selectedImage} style={{ width: '100%', height: 'auto' }} />
           )}
-        </DialogContent>
-      </Dialog>
+        </CModalBody>
+      </CModal>
 
       {/* Confirmation Dialog for Approve/Reject */}
       <Dialog open={confirmationDialog.open} onClose={handleConfirmClose}>

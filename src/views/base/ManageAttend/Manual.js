@@ -1,17 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-  Dialog,
-  DialogContent,
-  Typography,
-} from '@mui/material'
+import { TableContainer, Paper, IconButton, Dialog, DialogContent, Typography } from '@mui/material'
 import { RiEdit2Fill } from 'react-icons/ri'
 import { AiFillDelete } from 'react-icons/ai'
 import girl1 from './Images/girl-1.jpg'
@@ -20,6 +8,14 @@ import girls5 from './Images/girls-5.jpg'
 import mens1 from './Images/mens-1.jpg'
 import mens2 from './Images/mens-2.jpg'
 import mens4 from './Images/mens-4.jpg'
+import {
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+} from '@coreui/react'
 
 const data = [
   {
@@ -96,99 +92,91 @@ const Manual = () => {
   return (
     <div>
       <Typography variant="h6" gutterBottom>
-        Attendance Table
+        Manual Attendance
       </Typography>
-      <TableContainer
-        component={Paper}
-        style={{ backgroundColor: '#212631', borderRadius: '10px' }}
+      <div
+        style={{
+          overflowX: 'auto',
+          backgroundColor: '#212631',
+          borderRadius: '10px',
+        }}
       >
-        <Table>
-          <TableHead style={{ backgroundColor: '#2a303d' }}>
-            <TableRow>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Image
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                ID
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Name
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Mobile No
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Status
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell align="center">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    style={{
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '50%',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => handleImageClick(item.image)}
-                  />
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.id}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.name}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.mobile}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                    <Typography
+        <TableContainer component={Paper} style={{ width: '100%' }}>
+          <CTable align="middle" className="mb-0 border" hover responsive>
+            <CTableHead className="text-nowrap">
+              <CTableRow>
+                <CTableHeaderCell className="bg-body-tertiary text-center">Image</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">ID</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">Name</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">
+                  Mobile No
+                </CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">Status</CTableHeaderCell>
+                <CTableHeaderCell className="bg-body-tertiary text-center">
+                  Actions
+                </CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              {data.map((item, index) => (
+                <CTableRow key={index}>
+                  <CTableDataCell className="text-center">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      onClick={() => handleImageClick(item.image)}
                       style={{
-                        backgroundColor: getStatusColor(item.status),
-                        color: 'white',
-                        padding: '4px 10px',
-                        borderRadius: '10px',
-                        display: 'inline-block',
+                        cursor: 'pointer',
+                        borderRadius: '50%', // For rounded effect
+                        width: '60px', // Thumbnail size
+                        height: '60px',
+                        objectFit: 'cover', // Ensures the image covers the thumbnail area
                       }}
-                    >
-                      {item.status}
-                    </Typography>
-                    <Typography
-                      style={{
-                        backgroundColor: getStatusColor(item.statu),
-                        color: 'white',
-                        padding: '4px 10px',
-                        borderRadius: '10px',
-                        display: 'inline-block',
-                      }}
-                    >
-                      {item.statu}
-                    </Typography>
-                  </div>
-                </TableCell>
-                <TableCell align="center">
-                  <IconButton aria-label="edit">
-                    <RiEdit2Fill style={{ fontSize: '25px', color: 'wheat' }} />
-                  </IconButton>
-                  <IconButton aria-label="delete">
-                    <AiFillDelete style={{ fontSize: '25px', color: 'wheat' }} />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                    />
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center">{item.id}</CTableDataCell>
+                  <CTableDataCell className="text-center">{item.name}</CTableDataCell>
+                  <CTableDataCell className="text-center">{item.mobile}</CTableDataCell>
+                  <CTableDataCell className="text-center">
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+                      <Typography
+                        style={{
+                          backgroundColor: getStatusColor(item.status),
+                          color: 'white',
+                          padding: '4px 10px',
+                          borderRadius: '10px',
+                          display: 'inline-block',
+                        }}
+                      >
+                        {item.status}
+                      </Typography>
+                      <Typography
+                        style={{
+                          backgroundColor: getStatusColor(item.statu),
+                          color: 'white',
+                          padding: '4px 10px',
+                          borderRadius: '10px',
+                          display: 'inline-block',
+                        }}
+                      >
+                        {item.statu}
+                      </Typography>
+                    </div>
+                  </CTableDataCell>
+                  <CTableDataCell className="text-center">
+                    <IconButton aria-label="edit">
+                      <RiEdit2Fill style={{ fontSize: '25px', color: 'blue' }} />
+                    </IconButton>
+                    <IconButton aria-label="delete">
+                      <AiFillDelete style={{ fontSize: '25px', color: 'brown' }} />
+                    </IconButton>
+                  </CTableDataCell>
+                </CTableRow>
+              ))}
+            </CTableBody>
+          </CTable>
+        </TableContainer>
+      </div>
 
       {/* Modal for zoomed image */}
       <Dialog
@@ -197,7 +185,7 @@ const Manual = () => {
         PaperProps={{
           style: {
             overflow: 'hidden',
-            borderRadius: '50%',
+            borderRadius: '0',
             maxWidth: 'none',
           },
         }}
@@ -208,9 +196,10 @@ const Manual = () => {
               src={selectedImage}
               alt="Zoomed"
               style={{
-                width: '500px',
+                width: '500px', // Adjust size if necessary
                 height: '500px',
-                borderRadius: '50%',
+                objectFit: 'cover',
+                borderRadius: '0',
               }}
             />
           )}

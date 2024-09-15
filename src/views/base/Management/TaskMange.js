@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-  Dialog,
-  DialogContent,
-  Typography,
-} from '@mui/material'
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+  CImage,
+  CModal,
+  CModalBody,
+  CBadge,
+} from '@coreui/react'
+import { IconButton } from '@mui/material'
 import { RiEdit2Fill } from 'react-icons/ri'
 import { AiFillDelete } from 'react-icons/ai'
 import girl1 from './Images/girl-1.jpg'
@@ -21,7 +21,6 @@ import mens1 from './Images/mens-1.jpg'
 import mens2 from './Images/mens-2.jpg'
 import mens4 from './Images/mens-4.jpg'
 
-// Updated data with task details
 const data = [
   {
     id: 101,
@@ -91,174 +90,100 @@ const data = [
   },
 ]
 
-const TaskManagment = () => {
+const TaskManagement = () => {
   const [open, setOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
 
-  // Function to handle image click
   const handleImageClick = (image) => {
     setSelectedImage(image)
     setOpen(true)
   }
 
-  // Function to close the modal
   const handleClose = () => {
     setOpen(false)
     setSelectedImage(null)
   }
 
-  // Helper function to determine the background color based on the status
   const getStatusColor = (status) => {
     switch (status) {
       case 'Complete':
-        return 'green'
+        return 'success'
       case 'In Process':
-        return '#fc9c39'
+        return 'warning'
       case 'Pending':
-        return '#ff1a1a'
+        return 'danger'
       default:
-        return 'gray'
+        return 'secondary'
     }
   }
 
   return (
     <div>
-      <Typography variant="h6" gutterBottom>
-        Task Management Table
-      </Typography>
-      <TableContainer
-        component={Paper}
-        style={{ backgroundColor: '#212631', borderRadius: '10px' }}
-      >
-        <Table>
-          <TableHead style={{ backgroundColor: '#2a303d' }}>
-            <TableRow>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Image
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                ID
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Name
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Mobile No
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Task Name
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Location
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Completion Date
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Deadline
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Last Status
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell align="center">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    style={{
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '50%',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => handleImageClick(item.image)}
-                  />
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.id}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.name}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.mobile}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.taskName}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.location}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.completionDate}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.deadline}
-                </TableCell>
-                <TableCell align="center">
-                  <Typography
-                    style={{
-                      backgroundColor: getStatusColor(item.lastStatus),
-                      color: 'white',
-                      padding: '4px 10px',
-                      borderRadius: '4px',
-                      display: 'inline-block',
-                    }}
-                  >
-                    {item.lastStatus}
-                  </Typography>
-                </TableCell>
-                <TableCell align="center">
-                  <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                    <IconButton aria-label="edit">
-                      <RiEdit2Fill style={{ fontSize: '25px', color: 'wheat' }} />
-                    </IconButton>
-                    <IconButton aria-label="delete">
-                      <AiFillDelete style={{ fontSize: '25px', color: 'wheat' }} />
-                    </IconButton>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
-      {/* Modal for zoomed image */}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            overflow: 'hidden',
-            borderRadius: '50%',
-            maxWidth: 'none',
-          },
-        }}
-      >
-        <DialogContent style={{ padding: 0 }}>
-          {selectedImage && (
-            <img
-              src={selectedImage}
-              alt="Zoomed"
+      <CTable align="middle" color="dark" hover responsive>
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell>Image</CTableHeaderCell>
+            <CTableHeaderCell>ID</CTableHeaderCell>
+            <CTableHeaderCell>Name</CTableHeaderCell>
+            <CTableHeaderCell>Mobile No</CTableHeaderCell>
+            <CTableHeaderCell>Task Name</CTableHeaderCell>
+            <CTableHeaderCell>Location</CTableHeaderCell>
+            <CTableHeaderCell>Completion Date</CTableHeaderCell>
+            <CTableHeaderCell>Deadline</CTableHeaderCell>
+            <CTableHeaderCell>Last Status</CTableHeaderCell>
+            <CTableHeaderCell>Actions</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          {data.map((item, index) => (
+            <CTableRow
+              key={index}
               style={{
-                width: '500px',
-                height: '500px',
-                borderRadius: '50%',
+                backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#e0e0e0', // Alternating colors
               }}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+            >
+              <CTableDataCell>
+                <CImage
+                  rounded
+                  thumbnail
+                  src={item.image}
+                  onClick={() => handleImageClick(item.image)}
+                  style={{ width: '60px', height: '60px' }}
+                />
+              </CTableDataCell>
+              <CTableDataCell>{item.id}</CTableDataCell>
+              <CTableDataCell>{item.name}</CTableDataCell>
+              <CTableDataCell>{item.mobile}</CTableDataCell>
+              <CTableDataCell>{item.taskName}</CTableDataCell>
+              <CTableDataCell>{item.location}</CTableDataCell>
+              <CTableDataCell>{item.completionDate}</CTableDataCell>
+              <CTableDataCell>{item.deadline}</CTableDataCell>
+              <CTableDataCell>
+                <CBadge color={getStatusColor(item.lastStatus)}>{item.lastStatus}</CBadge>
+              </CTableDataCell>
+              <CTableDataCell>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+                  <IconButton>
+                    <RiEdit2Fill color="warning" />
+                  </IconButton>
+                  <IconButton>
+                    <AiFillDelete color="danger" />
+                  </IconButton>
+                </div>
+              </CTableDataCell>
+            </CTableRow>
+          ))}
+        </CTableBody>
+      </CTable>
+
+      {/* Modal for Image Preview */}
+      <CModal alignment="center" visible={open} onClose={handleClose}>
+        <CModalBody>
+          <CImage src={selectedImage} style={{ width: '100%', height: 'auto' }} />
+        </CModalBody>
+      </CModal>
     </div>
   )
 }
 
-export default TaskManagment
+export default TaskManagement
