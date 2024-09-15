@@ -119,19 +119,19 @@ const TaskManagement = () => {
 
   return (
     <div>
-      <CTable align="middle" color="dark" hover responsive>
+      <CTable align="middle" hover responsive>
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell>Image</CTableHeaderCell>
-            <CTableHeaderCell>ID</CTableHeaderCell>
-            <CTableHeaderCell>Name</CTableHeaderCell>
-            <CTableHeaderCell>Mobile No</CTableHeaderCell>
-            <CTableHeaderCell>Task Name</CTableHeaderCell>
-            <CTableHeaderCell>Location</CTableHeaderCell>
-            <CTableHeaderCell>Completion Date</CTableHeaderCell>
-            <CTableHeaderCell>Deadline</CTableHeaderCell>
-            <CTableHeaderCell>Last Status</CTableHeaderCell>
-            <CTableHeaderCell>Actions</CTableHeaderCell>
+            <CTableHeaderCell className="center">Image</CTableHeaderCell>
+            <CTableHeaderCell className="center">ID</CTableHeaderCell>
+            <CTableHeaderCell className="center">Name</CTableHeaderCell>
+            <CTableHeaderCell className="center">Mobile No</CTableHeaderCell>
+            <CTableHeaderCell className="center">Task Name</CTableHeaderCell>
+            <CTableHeaderCell className="center">Location</CTableHeaderCell>
+            <CTableHeaderCell className="center">Completion Date</CTableHeaderCell>
+            <CTableHeaderCell className="center">Deadline</CTableHeaderCell>
+            <CTableHeaderCell className="center">Last Status</CTableHeaderCell>
+            <CTableHeaderCell className="center">Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -159,15 +159,31 @@ const TaskManagement = () => {
               <CTableDataCell>{item.completionDate}</CTableDataCell>
               <CTableDataCell>{item.deadline}</CTableDataCell>
               <CTableDataCell>
-                <CBadge color={getStatusColor(item.lastStatus)}>{item.lastStatus}</CBadge>
+                <CBadge
+                  style={{
+                    padding: '10px 10px',
+                    borderRadius: '5px',
+                    display: 'inline-block',
+                  }}
+                  color={getStatusColor(item.lastStatus)}
+                >
+                  {item.lastStatus}
+                </CBadge>
               </CTableDataCell>
               <CTableDataCell>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: '10px',
+                  }}
+                >
                   <IconButton>
-                    <RiEdit2Fill color="warning" />
+                    <RiEdit2Fill color="lightBlue" />
                   </IconButton>
                   <IconButton>
-                    <AiFillDelete color="danger" />
+                    <AiFillDelete color="brown" />
                   </IconButton>
                 </div>
               </CTableDataCell>

@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-  Dialog,
-  DialogContent,
-  Typography,
-} from '@mui/material'
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+  CImage,
+  CModal,
+  CModalBody,
+} from '@coreui/react'
+import { IconButton } from '@mui/material'
 import { RiEdit2Fill } from 'react-icons/ri'
 import { AiFillDelete } from 'react-icons/ai'
 
@@ -119,140 +118,75 @@ const ExpenseDetails = () => {
 
   return (
     <div>
-      <Typography variant="h6" gutterBottom>
-        Expense Management Table
-      </Typography>
-      <TableContainer
-        component={Paper}
-        style={{ backgroundColor: '#212631', borderRadius: '10px' }}
-      >
-        <Table>
-          <TableHead style={{ backgroundColor: '#2a303d' }}>
-            <TableRow>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Image
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                ID
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Name
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Mobile No
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Expenses Type
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Expenses Description
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Amount
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Date
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Upload Bill
-              </TableCell>
-              <TableCell align="center" style={{ fontWeight: 'bold', color: 'wheat' }}>
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell align="center">
-                  <img
-                    src={item.image} // Display profile image from Images folder
-                    alt={item.name}
-                    style={{
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '50%',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => handleImageClick(item.image)}
-                  />
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.id}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.name}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.mobile}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.expensesType}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.expensesDescription}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.amount}
-                </TableCell>
-                <TableCell align="center" style={{ color: 'wheat' }}>
-                  {item.date}
-                </TableCell>
-                <TableCell align="center">
-                  <img
-                    src={item.uploadBill} // Display bill image from Bills folder
-                    alt="Bill"
-                    style={{
-                      width: '60px',
-                      height: '60px',
-                      borderRadius: '100%',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => handleImageClick(item.uploadBill)}
-                  />
-                </TableCell>
-                <TableCell align="center">
-                  <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                    <IconButton aria-label="edit">
-                      <RiEdit2Fill style={{ fontSize: '25px', color: 'wheat' }} />
-                    </IconButton>
-                    <IconButton aria-label="delete">
-                      <AiFillDelete style={{ fontSize: '25px', color: 'wheat' }} />
-                    </IconButton>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <CTable align="middle" hover responsive>
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell>Image</CTableHeaderCell>
+            <CTableHeaderCell>ID</CTableHeaderCell>
+            <CTableHeaderCell>Name</CTableHeaderCell>
+            <CTableHeaderCell>Mobile No</CTableHeaderCell>
+            <CTableHeaderCell>Expenses Type</CTableHeaderCell>
+            <CTableHeaderCell>Expenses Description</CTableHeaderCell>
+            <CTableHeaderCell>Amount</CTableHeaderCell>
+            <CTableHeaderCell>Date</CTableHeaderCell>
+            <CTableHeaderCell>Upload Bill</CTableHeaderCell>
+            <CTableHeaderCell className="text-center">Actions</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          {data.map((item, index) => (
+            <CTableRow
+              key={index}
+              style={{
+                backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#e0e0e0', // Alternating colors
+              }}
+            >
+              <CTableDataCell>
+                <CImage
+                  rounded
+                  thumbnail
+                  src={item.image} // Display profile image
+                  onClick={() => handleImageClick(item.image)}
+                  style={{ width: '60px', height: '60px', cursor: 'pointer' }}
+                />
+              </CTableDataCell>
+              <CTableDataCell>{item.id}</CTableDataCell>
+              <CTableDataCell>{item.name}</CTableDataCell>
+              <CTableDataCell>{item.mobile}</CTableDataCell>
+              <CTableDataCell>{item.expensesType}</CTableDataCell>
+              <CTableDataCell>{item.expensesDescription}</CTableDataCell>
+              <CTableDataCell>{item.amount}</CTableDataCell>
+              <CTableDataCell>{item.date}</CTableDataCell>
+              <CTableDataCell>
+                <CImage
+                  rounded
+                  thumbnail
+                  src={item.uploadBill} // Display bill image
+                  onClick={() => handleImageClick(item.uploadBill)}
+                  style={{ width: '60px', height: '60px', cursor: 'pointer' }}
+                />
+              </CTableDataCell>
+              <CTableDataCell>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+                  <IconButton aria-label="edit">
+                    <RiEdit2Fill style={{ fontSize: '25px', color: 'lightBlue' }} />
+                  </IconButton>
+                  <IconButton aria-label="delete">
+                    <AiFillDelete style={{ fontSize: '25px', color: 'brown' }} />
+                  </IconButton>
+                </div>
+              </CTableDataCell>
+            </CTableRow>
+          ))}
+        </CTableBody>
+      </CTable>
 
       {/* Modal for zoomed image */}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-            overflow: 'hidden',
-            borderRadius: '50%',
-            maxWidth: 'none',
-          },
-        }}
-      >
-        <DialogContent style={{ padding: 0 }}>
-          {selectedImage && (
-            <img
-              src={selectedImage}
-              alt="Zoomed"
-              style={{
-                width: '500px',
-                height: '500px',
-                borderRadius: '50%',
-              }}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+      <CModal alignment="center" visible={open} onClose={handleClose}>
+        <CModalBody>
+          <CImage src={selectedImage} style={{ width: '100%', height: 'auto' }} />
+        </CModalBody>
+      </CModal>
     </div>
   )
 }
