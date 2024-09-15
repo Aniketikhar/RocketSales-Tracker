@@ -30,6 +30,7 @@ const HelpSupp = React.lazy(() => import('./views/forms/help-support/HelpSupp'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
+  
 
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/dashboard', name: 'DashBoard', element: DashBoard },

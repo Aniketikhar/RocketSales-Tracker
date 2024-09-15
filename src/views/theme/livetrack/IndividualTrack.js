@@ -23,7 +23,7 @@ const MapController = ({ individualSalesMan }) => {
 
   useEffect(() => {
     if (individualSalesMan && map) {
-      map.flyTo([individualSalesMan.latitude, individualSalesMan.longitude], 16, { duration: 2 })
+      map.flyTo([individualSalesMan.latitude, individualSalesMan.longitude], 13, { duration: 2 })
     }
   }, [individualSalesMan, map])
 
@@ -84,16 +84,7 @@ const IndividualTrack = () => {
     }
   }, [individualSalesMan])
 
-  // "address": {
-  //       "road": "NH160H",
-  //       "village": "Nimgul",
-  //       "county": "\u0938\u093f\u0902\u0926\u0916\u0947\u0921",
-  //       "state_district": "Dhule District",
-  //       "state": "stateMaharashtra",
-  //       "postcode": "425408",
-  //       "country": "India",
-  //       "country_code": "in"
-  //   },
+  
 
   return (
     <>
