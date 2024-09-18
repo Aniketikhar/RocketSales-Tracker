@@ -1,7 +1,17 @@
 import React, { useState } from 'react'
-import { TableContainer, Paper, IconButton, Dialog, DialogContent, Typography } from '@mui/material'
+import {
+  TableContainer,
+  Paper,
+  IconButton,
+  Dialog,
+  DialogContent,
+  Typography,
+  Button,
+  InputBase,
+} from '@mui/material'
 import { RiEdit2Fill } from 'react-icons/ri'
 import { AiFillDelete } from 'react-icons/ai'
+import SearchIcon from '@mui/icons-material/Search'
 import girl1 from './Images/girl-1.jpg'
 import girls3 from './Images/girls-3.jpg'
 import girls5 from './Images/girls-5.jpg'
@@ -15,6 +25,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CImage,
 } from '@coreui/react'
 
 const data = [
@@ -74,13 +85,15 @@ const getStatusColor = (status) => {
 }
 
 const Manual = () => {
-  const [open, setOpen] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(null)
+  const [open, setOpen] = useState(false) // Dialog state for image zoom
+  const [selectedImage, setSelectedImage] = useState(null) // Holds the currently selected image for zoom
+  const [showSearch, setShowSearch] = useState(false) // Toggles the search bar visibility
+  const [searchQuery, setSearchQuery] = useState('') // Holds the user's search input
 
-  // Function to handle image click
+  // Function to handle image click and open zoom modal
   const handleImageClick = (image) => {
     setSelectedImage(image)
-    setOpen(true)
+    setOpen(true) // Opens the dialog/modal
   }
 
   // Function to close the modal
@@ -89,11 +102,56 @@ const Manual = () => {
     setSelectedImage(null)
   }
 
+  const handleSearchIconClick = () => {
+    setShowSearch(!showSearch)
+    if (showSearch) setSearchQuery('') // Reset the search when collapsing
+  }
+
+  // Filter data based on search query for Name, Mobile No, and ID
+  const filteredData = data.filter((item) => {
+    const searchLower = searchQuery.toLowerCase()
+    return (
+      item.name.toLowerCase().includes(searchLower) ||
+      item.mobile.toLowerCase().includes(searchLower) ||
+      item.id.toString().toLowerCase().includes(searchLower)
+    )
+  })
+
   return (
     <div>
-      <Typography variant="h6" gutterBottom>
-        Manual Attendance
-      </Typography>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingBottom: '10px',
+        }}
+      >
+        <Typography variant="h6" gutterBottom>
+          Manual Attendance
+        </Typography>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {showSearch && (
+            <InputBase
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                marginRight: '5px',
+                backgroundColor: '#f0f0f0',
+                borderRadius: '3px',
+                padding: '5px 10px',
+                transition: 'width 0.5s',
+                width: showSearch ? '200px' : '0px',
+              }}
+            />
+          )}
+          <IconButton onClick={handleSearchIconClick} style={{ color: 'grey' }}>
+            <SearchIcon />
+          </IconButton>
+        </div>
+      </div>
+
       <div
         style={{
           overflowX: 'auto',
@@ -118,20 +176,15 @@ const Manual = () => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {data.map((item, index) => (
+              {filteredData.map((item, index) => (
                 <CTableRow key={index}>
                   <CTableDataCell className="text-center">
-                    <img
+                    <CImage
+                      rounded
+                      thumbnail
                       src={item.image}
-                      alt={item.name}
                       onClick={() => handleImageClick(item.image)}
-                      style={{
-                        cursor: 'pointer',
-                        borderRadius: '50%', // For rounded effect
-                        width: '60px', // Thumbnail size
-                        height: '60px',
-                        objectFit: 'cover', // Ensures the image covers the thumbnail area
-                      }}
+                      style={{ width: '60px', height: '60px', cursor: 'pointer' }} // Image size handling
                     />
                   </CTableDataCell>
                   <CTableDataCell className="text-center">{item.id}</CTableDataCell>
@@ -196,7 +249,7 @@ const Manual = () => {
               src={selectedImage}
               alt="Zoomed"
               style={{
-                width: '500px', // Adjust size if necessary
+                width: '500px', // Zoomed image size
                 height: '500px',
                 objectFit: 'cover',
                 borderRadius: '0',

@@ -9,9 +9,11 @@ import {
   DialogTitle,
   Button,
   Typography,
+  InputBase,
 } from '@mui/material'
 import { RiEdit2Fill } from 'react-icons/ri'
 import { AiFillDelete } from 'react-icons/ai'
+import SearchIcon from '@mui/icons-material/Search'
 import girl1 from './Images/girl-1.jpg'
 import girls3 from './Images/girls-3.jpg'
 import girls5 from './Images/girls-5.jpg'
@@ -39,10 +41,12 @@ const data = [
   { id: 106, name: 'Olive', mobile: '123-456-7449', image: girls5 },
 ]
 
-const AttendanceTable = () => {
+const LeaveApplication = () => {
   const [open, setOpen] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)
   const [confirmationDialog, setConfirmationDialog] = useState({ open: false, action: null })
+  const [showSearch, setShowSearch] = useState(false) // To toggle search bar
+  const [searchQuery, setSearchQuery] = useState('') // To handle the search input
 
   // Function to handle image click
   const handleImageClick = (image) => {
@@ -73,11 +77,56 @@ const AttendanceTable = () => {
     setConfirmationDialog({ open: false, action: null })
   }
 
+  // Handle search icon click to toggle search bar visibility
+  const handleSearchIconClick = () => {
+    setShowSearch(!showSearch)
+    if (!showSearch) setSearchQuery('') // Reset search when search bar is hidden
+  }
+
+  // Filter data based on the search query for Name and Mobile fields
+  const filteredData = data.filter(
+    (item) =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.mobile.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
+
   return (
     <div>
-      <Typography variant="h6" gutterBottom>
-        Leave Application
-      </Typography>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingBottom: '10px',
+        }}
+      >
+        <Typography variant="h6" gutterBottom>
+          Leave Application
+        </Typography>
+
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {/* Search bar */}
+          {showSearch && (
+            <InputBase
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                marginRight: '5px',
+                backgroundColor: '#f0f0f0',
+                borderRadius: '3px',
+                padding: '5px 10px',
+                transition: 'width 0.5s',
+                width: showSearch ? '200px' : '0px',
+              }}
+            />
+          )}
+          <IconButton onClick={handleSearchIconClick} style={{ color: 'grey' }}>
+            <SearchIcon />
+          </IconButton>
+        </div>
+      </div>
+
       <div
         style={{
           overflowX: 'auto',
@@ -99,7 +148,7 @@ const AttendanceTable = () => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {data.map((row) => (
+              {filteredData.map((row) => (
                 <CTableRow key={row.id}>
                   <CTableDataCell className="text-center">
                     <CImage
@@ -178,4 +227,4 @@ const AttendanceTable = () => {
   )
 }
 
-export default AttendanceTable
+export default LeaveApplication

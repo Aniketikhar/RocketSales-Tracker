@@ -1,7 +1,17 @@
 import React, { useState } from 'react'
-import { TableContainer, Paper, IconButton, Dialog, DialogContent, Typography } from '@mui/material'
+import {
+  TableContainer,
+  Paper,
+  IconButton,
+  Dialog,
+  DialogContent,
+  Typography,
+  Button,
+  InputBase,
+} from '@mui/material'
 import { RiEdit2Fill } from 'react-icons/ri'
 import { AiFillDelete } from 'react-icons/ai'
+import SearchIcon from '@mui/icons-material/Search'
 import girl1 from './Images/girl-1.jpg'
 import girls3 from './Images/girls-3.jpg'
 import girls5 from './Images/girls-5.jpg'
@@ -18,6 +28,7 @@ import {
   CTableRow,
   CImage,
 } from '@coreui/react'
+import { useNavigate } from 'react-router-dom' // Import useNavigate
 
 const data = [
   { id: 101, name: 'Vihaan Deshmukh', mobile: '123-456-7890', status: 'Present', image: girl1 },
@@ -28,32 +39,89 @@ const data = [
   { id: 106, name: 'Olive', mobile: '123-456-7449', status: 'Present', image: girls5 },
 ]
 
-// Get status color based on the presence status
 const getStatusColor = (status) => {
   return status === 'Present' ? 'green' : 'red'
 }
 
 const Attendance = () => {
-  const [open, setOpen] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(null)
+  const [open, setOpen] = useState(false) // Dialog state for image zoom
+  const [selectedImage, setSelectedImage] = useState(null) // Holds the currently selected image for zoom
+  const [showSearch, setShowSearch] = useState(false) // Toggles the search bar visibility
+  const [searchQuery, setSearchQuery] = useState('') // Holds the user's search input
+  const navigate = useNavigate() // Used for navigating to another page
 
-  // Function to handle image click
   const handleImageClick = (image) => {
     setSelectedImage(image)
     setOpen(true)
   }
 
-  // Function to close the modal
   const handleClose = () => {
     setOpen(false)
     setSelectedImage(null)
   }
 
+  const handleSearchIconClick = () => {
+    setShowSearch(!showSearch)
+    if (showSearch) setSearchQuery('') // Reset the search when collapsing
+  }
+
+  const handleManualAttendanceClick = () => {
+    navigate('/manual-attendance') // Navigate to manual attendance page
+  }
+
+  // Filter data based on search query for Name, Mobile No, and ID
+  const filteredData = data.filter((item) => {
+    const searchLower = searchQuery.toLowerCase()
+    return (
+      item.name.toLowerCase().includes(searchLower) ||
+      item.mobile.toLowerCase().includes(searchLower) ||
+      item.id.toString().toLowerCase().includes(searchLower)
+    )
+  })
+
   return (
     <div>
-      <Typography variant="h6" gutterBottom>
-        Attendance Table
-      </Typography>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingBottom: '10px',
+        }}
+      >
+        <Typography variant="h6" gutterBottom>
+          Attendance Table
+        </Typography>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {showSearch && (
+            <InputBase
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                marginRight: '5px',
+                backgroundColor: '#f0f0f0',
+                borderRadius: '3px',
+                padding: '5px 10px',
+                transition: 'width 0.5s',
+                width: showSearch ? '200px' : '0px',
+              }}
+            />
+          )}
+          <IconButton onClick={handleSearchIconClick} style={{ color: 'grey' }}>
+            <SearchIcon />
+          </IconButton>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginLeft: '10px' }}
+            onClick={handleManualAttendanceClick} // Add onClick event to navigate
+          >
+            Manual Attendance
+          </Button>
+        </div>
+      </div>
+
       <div
         style={{
           overflowX: 'auto',
@@ -78,35 +146,30 @@ const Attendance = () => {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {data.map((item, index) => (
+              {filteredData.map((item, index) => (
                 <CTableRow key={index}>
-                  {/* Profile image with the CImage thumbnail component */}
                   <CTableDataCell className="text-center">
                     <CImage
                       rounded
                       thumbnail
                       src={item.image}
-                      onClick={() => handleImageClick(item.image)} // Image click handler added
-                      style={{ width: '60px', height: '60px', cursor: 'pointer' }} // Same size as in the first code
+                      onClick={() => handleImageClick(item.image)}
+                      style={{ width: '60px', height: '60px', cursor: 'pointer' }}
                     />
                   </CTableDataCell>
 
-                  {/* ID */}
                   <CTableDataCell className="text-center">
                     <div>{item.id}</div>
                   </CTableDataCell>
 
-                  {/* Name */}
                   <CTableDataCell className="text-center">
                     <div>{item.name}</div>
                   </CTableDataCell>
 
-                  {/* Mobile Number */}
                   <CTableDataCell className="text-center">
                     <div>{item.mobile}</div>
                   </CTableDataCell>
 
-                  {/* Status with color coding */}
                   <CTableDataCell className="text-center">
                     <div
                       style={{
@@ -121,13 +184,12 @@ const Attendance = () => {
                     </div>
                   </CTableDataCell>
 
-                  {/* Action icons (edit and delete) */}
                   <CTableDataCell className="text-center">
                     <IconButton aria-label="edit">
-                      <RiEdit2Fill style={{ fontSize: '25px', color: 'blue' }} />
+                      <RiEdit2Fill style={{ fontSize: '25px', color: 'lightBlue' }} />
                     </IconButton>
                     <IconButton aria-label="delete">
-                      <AiFillDelete style={{ fontSize: '25px', color: 'red' }} />
+                      <AiFillDelete style={{ fontSize: '25px', color: 'brown' }} />
                     </IconButton>
                   </CTableDataCell>
                 </CTableRow>
@@ -137,7 +199,6 @@ const Attendance = () => {
         </TableContainer>
       </div>
 
-      {/* Modal for zoomed image */}
       <Dialog
         open={open}
         onClose={handleClose}
